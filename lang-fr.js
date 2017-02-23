@@ -1451,6 +1451,7 @@ SnapTranslator.dict.fr = {
     'Walls':
         'Murs',
     'Noise':
-        'Bruit'
-
+        'Bruit',
+    'Save project':
+        'Enregistrer votre projet'
 };
