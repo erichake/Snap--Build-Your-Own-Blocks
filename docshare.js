@@ -8,12 +8,36 @@ WorldMorph.prototype.setDocShare = function(_params) {
     this.docShareFile = _params.file;
     this.isDocShare = (this.docShareApp !== "");
     var ide = world.children[0];
-    if (this.docShareFile !== "") {
-        setTimeout(function() {
-            ide.openProjectString(decodeURIComponent(escape(window.atob(mySelf.docShareFile))));
-        }, 10);
-    }
 
+    ide.setLanguage(navigator.language || navigator.userLanguage,function(){
+        ide.openProjectString(decodeURIComponent(escape(window.atob(mySelf.docShareFile))));
+
+        if (mySelf.docShareApp !== "") {
+            saveBtn = new PushButtonMorph(
+                mySelf,
+                saveToDocShare,
+                localize('Save')
+            );
+            saveBtn.padding = 0;
+            saveBtn.fontSize = 14;
+            saveBtn.corner = 12;
+            saveBtn.color = new Color(137,211,255);
+            saveBtn.highlightColor = saveBtn.color.darker();
+            saveBtn.pressColor = saveBtn.highlightColor;
+            saveBtn.labelMinExtent = new Point(150, 18);
+            saveBtn.labelShadowOffset = new Point(0, 0);
+            saveBtn.labelShadowColor = saveBtn.highlightColor;
+            saveBtn.labelColor = new Color(0,0,0);
+            saveBtn.contrast = mySelf.buttonContrast;
+            saveBtn.drawNew();
+            saveBtn.hint = localize('Save project');
+            saveBtn.setPosition(new Point(500, 3));
+            ide.add(saveBtn);
+            ide.fixLayout();
+            saveBtn.fixLayout();
+        }
+
+    });
 
 
     function saveToDocShare() {
@@ -53,34 +77,4 @@ WorldMorph.prototype.setDocShare = function(_params) {
 
         form.submit();
     }
-    setTimeout(function() {
-        if (mySelf.docShareApp !== "") {
-            saveBtn = new PushButtonMorph(
-                mySelf,
-                saveToDocShare,
-                localize('Save')
-            );
-            saveBtn.padding = 0;
-            saveBtn.fontSize = 16;
-            saveBtn.corner = 12;
-            saveBtn.color = new Color(137,211,255);
-            saveBtn.highlightColor = saveBtn.color.darker();
-            saveBtn.pressColor = saveBtn.highlightColor;
-            saveBtn.labelMinExtent = new Point(150, 18);
-            saveBtn.labelShadowOffset = new Point(0, 0);
-            saveBtn.labelShadowColor = saveBtn.highlightColor;
-            saveBtn.labelColor = new Color(0,0,0);
-            saveBtn.contrast = mySelf.buttonContrast;
-            saveBtn.drawNew();
-            saveBtn.hint = localize('Save project');
-            saveBtn.setPosition(new Point(500, 3));
-            ide.add(saveBtn);
-            ide.fixLayout();
-            saveBtn.fixLayout();
-        }
-    }, 1000);
-
-
-
-
 };
