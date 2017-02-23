@@ -1401,6 +1401,9 @@ SnapTranslator.dict.fr = {
     'Brush size':
         'Taille de pinceau',
     'Constrain proportions of shapes?\n(you can also hold shift)':
-        'Contraindre les proportions de la forme ?\n(vous pouvez aussi maintenir appuy\u00E9 Maj)'
+        'Contraindre les proportions de la forme ?\n(vous pouvez aussi maintenir appuy\u00E9 Maj)',
+
+    'Save project':
+        'Enregistrer votre projet'
 
 };
