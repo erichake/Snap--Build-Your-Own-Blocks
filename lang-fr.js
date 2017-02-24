@@ -1407,6 +1407,9 @@ SnapTranslator.dict.fr = {
     'Constrain proportions of shapes?\n(you can also hold shift)':
         'Contraindre les proportions de la forme ?\n(vous pouvez aussi maintenir appuy\u00E9 Maj)',
 
+    // DocShare :
+    'Save in progress...\nWait until you return to this project':
+        'Enregistrement en cours...\nPatienter jusqu\'au retour sur ce projet',
     // Import dialog box :    
     'Opening section':
         'Ouverture de la section',

@@ -21,21 +21,26 @@ WorldMorph.prototype.setDocShare = function(_params) {
                 );
                 saveBtn.padding = 0;
                 saveBtn.fontSize = 14;
-                saveBtn.corner = 12;
+                saveBtn.corner = 5;
                 saveBtn.color = new Color(137, 211, 255);
                 saveBtn.highlightColor = saveBtn.color.darker();
                 saveBtn.pressColor = saveBtn.highlightColor;
                 saveBtn.labelMinExtent = new Point(150, 18);
                 saveBtn.labelShadowOffset = new Point(0, 0);
-                saveBtn.labelShadowColor = saveBtn.highlightColor;
+                saveBtn.labelShadowColor = new Color(0, 0, 0, 0);
                 saveBtn.labelColor = new Color(0, 0, 0);
                 saveBtn.contrast = mySelf.buttonContrast;
+                saveBtn.labelBold = false;
+                saveBtn.label.isBold = false;
                 saveBtn.drawNew();
                 saveBtn.hint = localize('Save project');
-                saveBtn.setPosition(new Point(500, 3));
-                ide.add(saveBtn);
-                ide.fixLayout();
+                saveBtn.setPosition(new Point(300, 3));
+                ide.controlBar.add(saveBtn);
                 saveBtn.fixLayout();
+                ide.controlBar.cloudButton = saveBtn;
+                ide.controlBar.fixLayout();
+                ide.controlBar.label.destroy();
+                ide.controlBar.updateLabel = nop;
             }
         };
     });
@@ -44,6 +49,7 @@ WorldMorph.prototype.setDocShare = function(_params) {
 
 
     function saveToDocShare() {
+        ide.showMessage('Save in progress...\nWait until you return to this project');
         window.onbeforeunload = function() {
 
         };
