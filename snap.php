@@ -39,13 +39,23 @@
 	</head>
 	<body style="margin: 0;">
 	<?php 
-        $u=$_GET["url"];
-        if (!$u) $u=$_POST["url"];
-        $ga=$_GET["googleApps"];
-        if (!$ga) $ga=$_POST["googleApps"];
-        $gid=$_GET["googleId"];
-        if (!$gid) $gid=$_POST["googleId"];
-        $f=$_POST["file_content"];
+		function getSSLPage($url) {
+    		$ch = curl_init();
+    		curl_setopt($ch, CURLOPT_HEADER, false);
+    		curl_setopt($ch, CURLOPT_URL, $url);
+    		curl_setopt($ch, CURLOPT_SSLVERSION,3); 
+    		$result = curl_exec($ch);
+    		curl_close($ch);
+    		return $result;
+		}
+
+        $u = isset($_GET["url"]) ? $_GET["url"] : null;
+        $u = isset($_POST["url"]) ? $_POST["url"] : $u;
+        $ga = isset($_GET["googleApps"]) ? $_GET["googleApps"] : null;
+        $ga = isset($_POST["googleApps"]) ? $_POST["googleApps"] : $ga;
+        $gid = isset($_GET["googleId"]) ? $_GET["googleId"] : null;
+        $gid = isset($_POST["googleId"]) ? $_POST["googleId"] : $gid;
+        $f = isset($_POST["file_content"]) ? $_POST["file_content"] : null;
         // Don't need to wait for page load when google url param is here :
         if (($u)&&(strpos($u, 'google.com') !== false)) {    
             	$pattern="/([-\w]{25,})/";
@@ -56,7 +66,9 @@
                 	echo "<script>location.replace('https://script.google.com/macros/s/AKfycbyEZOu-YDVlJWrrMBdDXdWzMF1HI2ONmxKTmtgYF-cFdUXyq44/exec?".$args."')</script>";
             	}
         	};
-        if (($u)&&(!$f)) $f=base64_encode(file_get_contents("$u"));
+        if (($u)&&(!$f)) {
+        	$f=base64_encode(file_get_contents("$u"));
+        }
         echo	"<script>
         			php_params = {
         				url:\"".$u."\",

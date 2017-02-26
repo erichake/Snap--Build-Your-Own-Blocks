@@ -1,16 +1,20 @@
 WorldMorph.prototype.isDocShare = false;
 
 WorldMorph.prototype.setDocShare = function(_params) {
-    var saveBtn;
-    var mySelf = this;
+    var saveBtn,
+        mySelf = this,
+        ide = world.children[0],
+        lang = navigator.language || navigator.userLanguage;
+
+    lang = lang.split("-")[0].toLowerCase(); // To avoid mixed languages "fr-FR" (Safari)    
     this.docShareApp = _params.app;
     this.docShareFileID = _params.id;
     this.docShareFile = _params.file;
     this.isDocShare = (this.docShareApp !== "");
-    var ide = world.children[0];
 
 
-    ide.setLanguage(navigator.language || navigator.userLanguage, function() {
+
+    ide.setLanguage(lang, function() {
         if (mySelf.docShareFile !== "") {
             ide.openProjectString(decodeURIComponent(escape(window.atob(mySelf.docShareFile))));
             if (mySelf.docShareApp !== "") {

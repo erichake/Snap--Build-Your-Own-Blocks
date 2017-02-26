@@ -674,7 +674,7 @@ SnapTranslator.dict.fr = {
     'Select a sound from the media library':
         'Selectionner un son dans la bibliothèque de médias.',
     'Select a costume from the media library':
-        'Selectionner un costume dans la bibliothèque de médias.',
+        'Selectionner une image dans la bibliothèque de médias.',
     'Export project as plain text...':
         'Exporter le projet comme texte...',
     'Export project...':
@@ -913,7 +913,7 @@ SnapTranslator.dict.fr = {
     '(empty)':
         '(vide)',
     'Saved!':
-        'Enregistr\u00EA !',
+        'Enregistré !',
     'Delete Project':
         'Supprimer un projet',
     'Are you sure you want to delete':
@@ -1456,5 +1456,7 @@ SnapTranslator.dict.fr = {
     'Noise':
         'Bruit',
     'Save project':
-        'Enregistrer votre projet'
+        'Enregistrer votre projet',
+    'Backgrounds' :
+        'Arrière-plans'
 };
