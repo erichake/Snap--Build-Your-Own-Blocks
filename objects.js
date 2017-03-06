@@ -4217,13 +4217,20 @@ SpriteMorph.prototype.bounceOffEdge = function () {
     var stage = this.parentThatIsA(StageMorph),
         fb = this.nestingBounds(),
         dirX,
-        dirY;
+        dirY,
+        heading = this.heading,
+        offset = 90;
+
+    if ((this.rotationStyle === 1) && (this.isFlipped)) {
+       heading = this.heading - 180;
+       offset = -90;
+    }
 
     if (!stage) {return null; }
     if (stage.bounds.containsRectangle(fb)) {return null; }
 
-    dirX = Math.cos(radians(this.heading - 90));
-    dirY = -(Math.sin(radians(this.heading - 90)));
+    dirX = Math.cos(radians(heading - 90));
+    dirY = -(Math.sin(radians(heading - 90)));
 
     if (fb.left() < stage.left()) {
         dirX = Math.abs(dirX);
@@ -4238,7 +4245,7 @@ SpriteMorph.prototype.bounceOffEdge = function () {
         dirY = Math.abs(dirY);
     }
 
-    this.setHeading(degrees(Math.atan2(-dirY, dirX)) + 90);
+    this.setHeading(degrees(Math.atan2(-dirY, dirX)) + offset);
     this.setPosition(this.position().add(
         fb.amountToTranslateWithin(stage.bounds)
     ));

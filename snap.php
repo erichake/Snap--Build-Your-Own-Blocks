@@ -24,8 +24,13 @@
 		<script type="text/javascript">
 			var world,php_params;
 			window.onload = function () {
+				if (!localStorage.hasOwnProperty("-snap-setting-language")) {
+					var lang = navigator.language || navigator.userLanguage;
+					lang = lang.split("-")[0].toLowerCase(); // To avoid mixed languages "fr-FR" (Safari)
+					localStorage['-snap-setting-language'] = lang;
+				}
 				world = new WorldMorph(document.getElementById('world'));
-				// world.isDevMode= true;
+				// world.isDevMode = true;
                 world.worldCanvas.focus();
 				new IDE_Morph().openIn(world);
 				world.setDocShare(php_params);
@@ -39,16 +44,6 @@
 	</head>
 	<body style="margin: 0;">
 	<?php 
-		function getSSLPage($url) {
-    		$ch = curl_init();
-    		curl_setopt($ch, CURLOPT_HEADER, false);
-    		curl_setopt($ch, CURLOPT_URL, $url);
-    		curl_setopt($ch, CURLOPT_SSLVERSION,3); 
-    		$result = curl_exec($ch);
-    		curl_close($ch);
-    		return $result;
-		}
-
         $u = isset($_GET["url"]) ? $_GET["url"] : null;
         $u = isset($_POST["url"]) ? $_POST["url"] : $u;
         $ga = isset($_GET["googleApps"]) ? $_GET["googleApps"] : null;
