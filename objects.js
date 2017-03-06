@@ -186,18 +186,6 @@ SpriteMorph.prototype.initBlocks = function () {
             spec: 'turn %counterclockwise %n degrees',
             defaults: [15]
         },
-        flip: {
-            only: SpriteMorph,
-            type: 'command',
-            category: 'motion',
-            spec: 'flip \u2194'
-        },
-        resetFlip: {
-            only: SpriteMorph,
-            type: 'command',
-            category: 'motion',
-            spec: 'reset flip \u2192'
-        },
         setHeading: {
             only: SpriteMorph,
             type: 'command',
@@ -1353,7 +1341,6 @@ SpriteMorph.prototype.init = function (globals) {
     this.normalExtent = new Point(60, 60); // only for costume-less situation
     this.scale = 1;
     this.rotationStyle = 1; // 1 = full, 2 = left/right, 0 = off
-    this.isFlipped = false;
     this.version = Date.now(); // for observer optimization
     this.isClone = false; // indicate a "temporary" Scratch-style clone
     this.isCorpse = false; // indicate whether a sprite/clone has been deleted
@@ -1517,12 +1504,7 @@ SpriteMorph.prototype.drawNew = function () {
         }
     }
     if (this.costume && !isLoadingCostume) {
-        if (this.rotationStyle === 2) {
-            pic = isFlipped ? this.costume.flipped() : this.costume;
-        }
-        if (this.rotationStyle === 1) {
-            pic = this.isFlipped ? this.costume.flipped() : this.costume;
-        }
+        pic = isFlipped ? this.costume.flipped() : this.costume;
 
         // determine the rotated costume's bounding box
         corners = pic.bounds().corners().map(function (point) {
@@ -1568,7 +1550,7 @@ SpriteMorph.prototype.drawNew = function () {
             .rotateBy(radians(-(facing - 90)), shift)
             .scaleBy(this.scale * stageScale);
     } else {
-        facing = isFlipped ? -90 : (this.isFlipped ? 180 + facing : facing);
+        facing = isFlipped ? -90 : facing;
         newX = Math.min(
             Math.max(
                 this.normalExtent.x * this.scale * stageScale,
@@ -1790,9 +1772,6 @@ SpriteMorph.prototype.blockTemplates = function (category) {
         blocks.push(block('forward'));
         blocks.push(block('turn'));
         blocks.push(block('turnLeft'));
-        blocks.push('-');
-        blocks.push(block('flip'));
-        blocks.push(block('resetFlip'));
         blocks.push('-');
         blocks.push(block('setHeading'));
         blocks.push(block('doFaceTowards'));
@@ -4045,19 +4024,14 @@ SpriteMorph.prototype.setPosition = function (aPoint, justMe) {
 
 SpriteMorph.prototype.forward = function (steps) {
     var dest,
-        dist = steps * this.parent.scale || 0,
-        heading = this.heading;
+        dist = steps * this.parent.scale || 0;
 
-        if ((this.rotationStyle === 1) && (this.isFlipped)) {
-            heading = this.heading - 180;
-        }
-    
     if (dist >= 0) {
-        dest = this.position().distanceAngle(dist, heading);
+        dest = this.position().distanceAngle(dist, this.heading);
     } else {
         dest = this.position().distanceAngle(
             Math.abs(dist),
-            (heading - 180)
+            (this.heading - 180)
         );
     }
     this.setPosition(dest);
@@ -4108,18 +4082,6 @@ SpriteMorph.prototype.turn = function (degrees) {
 
 SpriteMorph.prototype.turnLeft = function (degrees) {
     this.setHeading(this.heading - (+degrees || 0));
-};
-
-SpriteMorph.prototype.flip = function () {
-    if (this.rotationStyle === 1) {
-        this.isFlipped = !this.isFlipped;
-        this.drawNew();
-    }
-};
-
-SpriteMorph.prototype.resetFlip = function () {
-        this.isFlipped = false;
-        this.drawNew();
 };
 
 SpriteMorph.prototype.xPosition = function () {

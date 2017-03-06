@@ -1402,8 +1402,6 @@ SnapTranslator.dict.fr = {
         'miroir \u2194',
     'flip \u2195':
         'miroir \u2195',
-    'reset flip \u2192':
-        'rétablir le sens \u2192',
     'Brush size':
         'Taille de pinceau',
     'Constrain proportions of shapes?\n(you can also hold shift)':
