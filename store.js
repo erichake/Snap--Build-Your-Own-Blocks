@@ -649,7 +649,7 @@ SnapSerializer.prototype.loadSprites = function (xmlString, ide) {
         sprite.rotationStyle = parseFloat(
             model.attributes.rotation || '1'
         );
-        sprite.isFlipped = model.attributes.flipped === 'true';
+        sprite.isFlipped = model.attributes.flipped !== 'false';
         sprite.isDraggable = model.attributes.draggable !== 'false';
         sprite.isVisible = model.attributes.hidden !== 'true';
         sprite.heading = parseFloat(model.attributes.heading) || 0;
@@ -1266,7 +1266,7 @@ SnapSerializer.prototype.loadValue = function (model) {
         v.rotationStyle = parseFloat(
             model.attributes.rotation || '1'
         );
-        v.isFlipped = model.attributes.flipped === 'true';
+        v.isFlipped = model.attributes.flipped !== 'false';
         v.isDraggable = model.attributes.draggable !== 'false';
         v.isVisible = model.attributes.hidden !== 'true';
         v.heading = parseFloat(model.attributes.heading) || 0;
