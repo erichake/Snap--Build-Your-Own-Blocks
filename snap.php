@@ -56,6 +56,8 @@
         $gid = isset($_GET["googleId"]) ? $_GET["googleId"] : null;
         $gid = isset($_POST["googleId"]) ? $_POST["googleId"] : $gid;
         $f = isset($_POST["file_content"]) ? $_POST["file_content"] : null;
+        $fs = isset($_GET["fullscreen"]) ? $_GET["fullscreen"] : null;
+        $fs = isset($_POST["fullscreen"]) ? $_POST["fullscreen"] : $fs;
         // Don't need to wait for page load when google url param is here :
         if (($u)&&(strpos($u, 'google.com') !== false)) {    
             	$pattern="/([-\w]{25,})/";
@@ -74,7 +76,8 @@
         				url:\"".$u."\",
         				app:\"".$ga."\",
         				id:\"".$gid."\",
-        				file:\"".$f."\"
+        				file:\"".$f."\",
+        				fullscreen:\"".$fs."\"
         			}
         		</script>";
 		?>

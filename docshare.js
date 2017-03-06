@@ -4,14 +4,15 @@ WorldMorph.prototype.setDocShare = function(_params) {
     var saveBtn,
         mySelf = this,
         ide = world.children[0],
-        lang = navigator.language || navigator.userLanguage;
+        lang = navigator.language || navigator.userLanguage,
+        // fullscreen mode : 0 (no full screen) , 1 (full screen) , 2 (fullscreen without code watching)
+        fs = (_params.fullscreen === "") ? 0 : parseInt(_params.fullscreen);
 
     lang = lang.split("-")[0].toLowerCase(); // To avoid mixed languages "fr-FR" (Safari)    
     this.docShareApp = _params.app;
     this.docShareFileID = _params.id;
     this.docShareFile = _params.file;
     this.isDocShare = (this.docShareApp !== "");
-
 
 
     ide.setLanguage(lang, function() {
@@ -47,6 +48,12 @@ WorldMorph.prototype.setDocShare = function(_params) {
                 ide.controlBar.updateLabel = nop;
             }
         };
+        if (fs) {
+            ide.toggleAppMode(true);
+            if (fs === 2) {
+                ide.controlBar.appModeButton.destroy()
+            }
+        }
     });
 
 
